@@ -1,0 +1,32 @@
+{
+    "name": "zfcampus/statuslib-example",
+    "description": "Library for use with Apigility documentation examples",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "apigility",
+        "framework",
+        "zf2"
+    ],
+    "homepage": "http://apigility.org/",
+    "support": {
+        "email": "apigility-users@zend.com",
+        "irc": "irc://irc.freenode.net/apigility",
+        "source": "https://github.com/zfcampus/statuslib-example",
+        "issues": "https://github.com/zfcampus/statuslib-example/issues"
+    },
+    "extra" {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+    "require": {
+        "php": ">=5.3.23",
+        "rhumsaa/uuid": "~2.7",
+        "zendframework/zend-config": "~2.3",
+        "zendframework/zend-db": "~2.3",
+        "zendframework/zend-paginator": "~2.3",
+        "zendframework/zend-stdlib": "~2.3",
+        "zfcampus/zf-configuration": "~1.0-dev"
+    }
+}
