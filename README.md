@@ -91,3 +91,16 @@ For purposes of the Apigility examples, we suggest the following:
 
 The above will provide the minimum necessary requirements for experimenting with the library in
 order to test an API.
+
+Using a database
+----------------
+
+The file `data/statuslib.sqlite.sql` contains a [SQLite](https://www.sqlite.org/) schema. You can
+create a SQLite database using:
+
+```console
+$ sqlite3 statuslib.db < path/to/data/statuslib.sqlite.sql
+```
+
+The schema can be either used directly by other databases, or easily modified to work with other
+databases.
