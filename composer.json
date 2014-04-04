@@ -28,5 +28,13 @@
         "zendframework/zend-paginator": "~2.3",
         "zendframework/zend-stdlib": "~2.3",
         "zfcampus/zf-configuration": "~1.0-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "StatusLib\\": "src/"
+        },
+        "classmap": [
+            "Module.php"
+        ]
     }
 }
