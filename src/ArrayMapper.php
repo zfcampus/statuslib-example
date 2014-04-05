@@ -123,7 +123,7 @@ class ArrayMapper implements MapperInterface
             $data = (array) $data;
         }
 
-        if (! array_key_exists($this->data[$id])) {
+        if (! array_key_exists($id, $this->data)) {
             throw new DomainException('Cannot update; no such status message', 404);
         }
 
@@ -146,7 +146,7 @@ class ArrayMapper implements MapperInterface
             throw new DomainException('Invalid identifier provided', 404);
         }
 
-        if (! array_key_exists($this->data[$id])) {
+        if (! array_key_exists($id, $this->data)) {
             throw new DomainException('Cannot delete; no such status message', 404);
         }
 
