@@ -57,7 +57,7 @@ class HydratingArrayPaginator extends ArrayPaginator
 
         $collection = array();
         foreach ($set as $item) {
-            $collection[] = $this->hydrator->hydrate($item, $this->entityPrototype);
+            $collection[] = $this->hydrator->hydrate($item, clone $this->entityPrototype);
         }
         return $collection;
     }
