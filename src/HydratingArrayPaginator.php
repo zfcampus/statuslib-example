@@ -27,7 +27,7 @@ class HydratingArrayPaginator extends ArrayPaginator
     protected $hydrator;
 
     /**
-     * @param array $array 
+     * @param array $array
      * @param null|HydratorInterface $hydrator
      * @param null|mixed $entityPrototype A prototype entity to use with the hydrator
      */
@@ -39,13 +39,13 @@ class HydratingArrayPaginator extends ArrayPaginator
     }
 
     /**
-     * Override getItems() 
+     * Override getItems()
      *
-     * Overrides getItems() to return a collection of entities based on the 
+     * Overrides getItems() to return a collection of entities based on the
      * provided Hydrator and entity prototype, if available.
-     * 
-     * @param int $offset 
-     * @param int $itemCountPerPage 
+     *
+     * @param int $offset
+     * @param int $itemCountPerPage
      * @return array
      */
     public function getItems($offset, $itemCountPerPage)
