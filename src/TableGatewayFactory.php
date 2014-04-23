@@ -25,16 +25,23 @@ class TableGatewayFactory
     {
         $db    = 'Db\StatusLib';
         $table = 'status';
-        if ($services->has('config-statuslib')) {
+        if ($services->has('config')) {
             $config = $services->get('config');
-            $config = $config['statuslib'];
+            switch (isset($config['statuslib'])) {
+                case true:
+                    $config = $config['statuslib'];
 
-            if (array_key_exists('db', $config) && !empty($config['db'])) {
-                $db = $config['db'];
-            }
+                    if (array_key_exists('db', $config) && !empty($config['db'])) {
+                        $db = $config['db'];
+                    }
 
-            if (array_key_exists('table', $config) && !empty($config['table'])) {
-                $table = $config['table'];
+                    if (array_key_exists('table', $config) && !empty($config['table'])) {
+                        $table = $config['table'];
+                    }
+                    break;
+                case false:
+                default:
+                    break;
             }
         }
 
