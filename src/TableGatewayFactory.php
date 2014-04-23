@@ -25,7 +25,7 @@ class TableGatewayFactory
     {
         $db    = 'Db\StatusLib';
         $table = 'status';
-        if ($services->has('config-statuslib')) {
+        if ($services->has('config')) {
             $config = $services->get('config');
             $config = $config['statuslib'];
 
