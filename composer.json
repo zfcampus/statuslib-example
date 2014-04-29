@@ -30,7 +30,7 @@
         "zfcampus/zf-configuration": "~1.0-dev"
     },
     "autoload": {
-        "psr-4": {
+        "psr-0": {
             "StatusLib\\": "src/"
         },
         "classmap": [
