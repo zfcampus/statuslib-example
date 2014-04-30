@@ -125,85 +125,85 @@ StatusLib in a New ZF2 Project
 
     - Option A: Array data source:
 
-    First, copy the sample array to the `data` directory of thet application:
+      First, copy the sample array to the `data` directory of thet application:
 
-    ```console
-    $ cp vendor/zfcampus/statuslib-example/data/sample-data/array-data.php data/status.data.php
-    ```
+      ```console
+      $ cp vendor/zfcampus/statuslib-example/data/sample-data/array-data.php data/status.data.php
+      ```
 
-    Then, configure this datasource by setting up a `local.php` configuration file:
+      Then, configure this datasource by setting up a `local.php` configuration file:
 
-    ```console
-    $ cp config/autoload/local.php.dist config/autoload/local.php
-    ```
+      ```console
+      $ cp config/autoload/local.php.dist config/autoload/local.php
+      ```
 
-    Next, add the StatusLib specific configuration for an array based data source:
+      Next, add the StatusLib specific configuration for an array based data source:
 
-    ```php
-    'statuslib' => array(
-        'array_mapper_path' => 'data/status.data.php',
-    ),
-    'service_manager' => array(
-        'aliases' => array(
-            'StatusLib\Mapper' => 'StatusLib\ArrayMapper',
-        ),
-    ),
-    ```
+      ```php
+      'statuslib' => array(
+         'array_mapper_path' => 'data/status.data.php',
+      ),
+      'service_manager' => array(
+          'aliases' => array(
+              'StatusLib\Mapper' => 'StatusLib\ArrayMapper',
+          ),
+      ),
+      ```
 
     - Option B: Sqlite data source:
 
-    First, create a sqlite3 database, and fill it with the sample data:
+      First, create a sqlite3 database, and fill it with the sample data:
 
-    ```console
-    $ sqlite3 status.db < vendor/zfcampus/statuslib-example/data/statuslib.sqlite.sql
-    $ sqlite3 status.db < vendor/zfcampus/statuslib-example/data/sample-data/db-sqlite-insert.sql
-    ```
+      ```console
+      $ sqlite3 status.db < vendor/zfcampus/statuslib-example/data/statuslib.sqlite.sql
+      $ sqlite3 status.db < vendor/zfcampus/statuslib-example/data/sample-data/db-sqlite-insert.sql
+      ```
+  
+      Then, configure this datasource by setting up a `local.php` configuration file:
 
-    Then, configure this datasource by setting up a `local.php` configuration file:
+      ```console
+      $ cp config/autoload/local.php.dist config/autoload/local.php
+      ```
 
-    ```console
-    $ cp config/autoload/local.php.dist config/autoload/local.php
-    ```
+      Next, add the StatusLib specific configuration for a sqlite database based data source:
 
-    Next, add the StatusLib specific configuration for a sqlite database based data source:
-
-    ```php
-    'db' => array(
-        'adapters' => array(
-            'MyDb' => array(
-                'driver' => 'pdo_sqlite',
-                'database' => __DIR__ . '/../../data/statuslib.db'
-            )
-        )
-    ),
-    'statuslib' => array(
-        'db' => 'MyDb',
-        'table' => 'status',
-    ),
-    'service_manager' => array(
-        'aliases' => array(
-            'StatusLib\Mapper' => 'StatusLib\TableGatewayMapper',
-        ),
-        'abstract_factories' => array(
-            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterAbstractServiceFactory',
-        )
-    ),
-    ```
+      ```php
+      'db' => array(
+          'adapters' => array(
+              'MyDb' => array(
+                  'driver' => 'pdo_sqlite',
+                  'database' => __DIR__ . '/../../data/statuslib.db'
+              )
+          )
+      ),
+      'statuslib' => array(
+          'db' => 'MyDb',
+          'table' => 'status',
+      ),
+      'service_manager' => array(
+          'aliases' => array(
+              'StatusLib\Mapper' => 'StatusLib\TableGatewayMapper',
+          ),
+          'abstract_factories' => array(
+              'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterAbstractServiceFactory',
+          )
+      ),
+      ```
 
 4. Alter the stock controller and view to prove the data source is working:
 
-    -  Alter the index view `module/Application/view/application/index/index.phtml`, replacing it with:
+    - Alter the index view `module/Application/view/application/index/index.phtml`, replacing it with:
 
-    ```php
-    <?php foreach ($this->statuses as $status): ?>
-        <?php echo $status->message . ' by ' . $status->user; ?><br>
-    <?php endforeach; ?>
-    ```
+      ```php
+      <?php foreach ($this->statuses as $status): ?>
+          <?php echo $status->message . ' by ' . $status->user; ?><br>
+      <?php endforeach; ?>
+      ```
 
     - Alter the `module/Application/src/Application/Controller/IndexController.php`'s `indexAction` method:
 
-    ```php
-    $statusMapper = $this->serviceLocator->get('StatusLib\Mapper');
-    $statuses = $statusMapper->fetchAll();
-    return new ViewModel(array('statuses' => $statuses));
-    ```
+      ```php
+      $statusMapper = $this->serviceLocator->get('StatusLib\Mapper');
+      $statuses = $statusMapper->fetchAll();
+      return new ViewModel(array('statuses' => $statuses));
+      ```
