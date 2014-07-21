@@ -118,7 +118,7 @@ StatusLib in a New ZF2 Project
 2. Install the StatusLib module:
 
   ```console
-  $ composer require zfcampus/zf-configuration:dev-master
+  $ composer require zfcampus/statuslib-example:dev-master
   ```
 
 3. Build a DataSource
