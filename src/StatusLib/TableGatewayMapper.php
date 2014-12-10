@@ -52,6 +52,9 @@ class TableGatewayMapper implements MapperInterface
         }
 
         $data['id'] = Uuid::uuid4();
+        if (! isset($data['timestamp'])) {
+            $data['timestamp'] = time();
+        }
         $this->table->insert($data);
 
         $resultSet = $this->table->select(array('id' => $data['id']));
@@ -98,6 +101,10 @@ class TableGatewayMapper implements MapperInterface
         }
         if (is_object($data)) {
             $data = (array) $data;
+        }
+
+        if (! isset($data['timestamp'])) {
+            $data['timestamp'] = time();
         }
 
         $this->table->update($data, array('id' => $id));
