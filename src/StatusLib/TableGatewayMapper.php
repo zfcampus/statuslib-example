@@ -83,7 +83,7 @@ class TableGatewayMapper implements MapperInterface
      */
     public function fetchAll()
     {
-        return new Collection(new DbTableGateway($this->table));
+        return new Collection(new DbTableGateway($this->table, null, array('timestamp' => 'DESC')));
     }
 
     /**
