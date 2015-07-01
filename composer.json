@@ -22,7 +22,7 @@
     },
     "require": {
         "php": ">=5.3.23",
-        "rhumsaa/uuid": "~2.7",
+        "ramsey/uuid": "^2.8",
         "zendframework/zend-config": "~2.3",
         "zendframework/zend-db": "~2.3",
         "zendframework/zend-paginator": "~2.3",
