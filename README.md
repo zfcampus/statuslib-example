@@ -190,10 +190,19 @@ databases.
    namespace StatusLib;
 
    use Zend\Mvc\Application;
+   use Zend\Stdlib\ArrayUtils;
 
    include 'vendor/autoload.php';
 
    $appConfig = include 'config/application.config.php';
+
+   if (file_exists('config/development.config.php')) {
+       $appConfig = ArrayUtils::merge(
+           $appConfig,
+           include 'config/development.config.php'
+       );
+   }
+
    $app = Application::init($appConfig);
    $services = $app->getServiceManager();
 
