@@ -8,7 +8,7 @@ namespace StatusLib;
 
 use stdClass;
 use Zend\Paginator\Adapter\ArrayAdapter as ArrayPaginator;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 
 /**
  * Specialized Zend\Paginator\Adapter\ArrayAdapter instance for returning

@@ -29,6 +29,7 @@
         "zendframework/zend-config": "^2.6",
         "zendframework/zend-db": "^2.8.2",
         "zendframework/zend-paginator": "^2.7",
+        "zendframework/zend-hydrator": "^1.1 || ^2.0",
         "zendframework/zend-stdlib": "^2.7.7 || ^3.0.1",
         "zfcampus/zf-configuration": "^1.0"
     },
