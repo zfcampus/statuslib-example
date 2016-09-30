@@ -151,8 +151,8 @@ databases.
       First, create a sqlite3 database, and fill it with the sample data:
 
       ```console
-      $ sqlite3 status.db < vendor/zfcampus/statuslib-example/data/statuslib.sqlite.sql
-      $ sqlite3 status.db < vendor/zfcampus/statuslib-example/data/sample-data/db-sqlite-insert.sql
+      $ sqlite3 data/status.db < vendor/zfcampus/statuslib-example/data/statuslib.sqlite.sql
+      $ sqlite3 data/status.db < vendor/zfcampus/statuslib-example/data/sample-data/db-sqlite-insert.sql
       ```
   
       Then, configure this datasource by setting up a `local.php` configuration file:
@@ -168,7 +168,7 @@ databases.
           'adapters' => [
               'MyDb' => [
                   'driver' => 'pdo_sqlite',
-                  'database' => __DIR__ . '/../../data/statuslib.db'
+                  'database' => __DIR__ . '/../../data/status.db'
               ],
           ],
       ],
