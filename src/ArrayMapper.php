@@ -65,7 +65,7 @@ class ArrayMapper implements MapperInterface
             $data = (array) $data;
         }
 
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid data provided to %s; must be an array or Traversable',
                 __METHOD__
@@ -91,11 +91,11 @@ class ArrayMapper implements MapperInterface
      */
     public function fetch($id)
     {
-        if (!Uuid::isValid($id)) {
+        if (! Uuid::isValid($id)) {
             throw new DomainException('Invalid identifier provided', 404);
         }
 
-        if (!array_key_exists($id, $this->data)) {
+        if (! array_key_exists($id, $this->data)) {
             throw new DomainException('Status message not found', 404);
         }
         return $this->createEntity($this->data[$id]);
@@ -116,7 +116,7 @@ class ArrayMapper implements MapperInterface
      */
     public function update($id, $data)
     {
-        if (!Uuid::isValid($id)) {
+        if (! Uuid::isValid($id)) {
             throw new DomainException('Invalid identifier provided', 404);
         }
         if (is_object($data)) {
@@ -142,7 +142,7 @@ class ArrayMapper implements MapperInterface
      */
     public function delete($id)
     {
-        if (!Uuid::isValid($id)) {
+        if (! Uuid::isValid($id)) {
             throw new DomainException('Invalid identifier provided', 404);
         }
 
