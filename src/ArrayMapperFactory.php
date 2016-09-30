@@ -12,7 +12,7 @@ use ZF\Configuration\ConfigResource;
 
 /**
  * Service factory for the ArrayMapper
- * 
+ *
  * Requires the Config service in the service locator, and a
  * statuslib.array_mapper_path subkey within the configuration that points
  * to a valid filesystem path of a PHP file that will return an array.
@@ -25,19 +25,23 @@ class ArrayMapperFactory
 {
     public function __invoke($services)
     {
-        if (!$services->has('Config')) {
-            throw new DomainException('Cannot create StatusLib\ArrayMapper; missing Config dependency');
+        if (! $services->has('config')) {
+            throw new DomainException('Cannot create StatusLib\ArrayMapper; missing config dependency');
         }
 
-        $config = $services->get('Config');
+        $config = $services->get('config');
         if (! isset($config['statuslib']['array_mapper_path'])) {
-            throw new DomainException('Cannot create StatusLib\ArrayMapper; missing statuslib.array_mapper_path configuration');
+            throw new DomainException(sprintf(
+                'Cannot create %s; missing statuslib.array_mapper_path configuration',
+                ArrayMapper::class
+            ));
         }
 
         $path = $config['statuslib']['array_mapper_path'];
         if (! file_exists($path)) {
             throw new DomainException(sprintf(
-                'Cannot create StatusLib\ArrayMapper; path "%s" does not exist',
+                'Cannot create %s; path "%s" does not exist',
+                ArrayMapper::class,
                 $path
             ));
         }
@@ -46,7 +50,8 @@ class ArrayMapperFactory
 
         if (! is_array($data)) {
             throw new DomainException(sprintf(
-                'Cannot create StatusLib\ArrayMapper; file "%s" does not return an array',
+                'Cannot create %s; file "%s" does not return an array',
+                ArrayMapper::class,
                 $path
             ));
         }

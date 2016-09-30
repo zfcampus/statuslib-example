@@ -17,9 +17,13 @@ class TableGatewayMapperFactory
 {
     public function __invoke($services)
     {
-        if (!$services->has('StatusLib\TableGateway')) {
-            throw new DomainException('Cannot create StatusLib\TableGatewayMapper; missing StatusLib\TableGateway dependency');
+        if (! $services->has('StatusLib\TableGateway')) {
+            throw new DomainException(sprintf(
+                'Cannot create %s; missing %s dependency',
+                TableGatewayMapper::class,
+                TableGateway::class
+            ));
         }
-        return new TableGatewayMapper($services->get('StatusLib\TableGateway'));
+        return new TableGatewayMapper($services->get(TableGateway::class));
     }
 }
