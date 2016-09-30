@@ -30,14 +30,8 @@ class TableGatewayFactory
             switch (isset($config['statuslib'])) {
                 case true:
                     $config = $config['statuslib'];
-
-                    if (array_key_exists('db', $config) && !empty($config['db'])) {
-                        $db = $config['db'];
-                    }
-
-                    if (array_key_exists('table', $config) && !empty($config['table'])) {
-                        $table = $config['table'];
-                    }
+                    $db     = isset($config['db']) ? $config['db'] : $db;
+                    $table  = isset($config['table']) ? $config['table'] : $table;
                     break;
                 case false:
                 default:
@@ -45,9 +39,10 @@ class TableGatewayFactory
             }
         }
 
-        if (!$services->has($db)) {
+        if (! $services->has($db)) {
             throw new DomainException(sprintf(
-                'Unable to create StatusLib\TableGateway due to missing "%s" service',
+                'Unable to create %s due to missing "%s" service',
+                TableGateway::class,
                 $db
             ));
         }

@@ -1,5 +1,4 @@
-StatusLib
-=========
+# StatusLib
 
 This is a library designed to demonstrate an [Apigility](http://apigility.org/) "Code-Connected"
 REST API, and has been written in parallel with the [Apigility documentation](https://github.com/zfcampus/apigility-documentation).
@@ -18,52 +17,51 @@ It uses the following components:
   array merging capabilities.
 - [zendframework/zend-paginator](https://framework.zend.com/) for providing pagination.
 
-It is written as a Zend Framework 2 module, but could potentially be dropped into other
+It is written as a Zend Framework module, but could potentially be dropped into other
 applications; use the `StatusLib\*Factory` classes to see how dependencies might be injected.
 
-Installation
-------------
+## Installation
 
 Use [Composer](https://getcomposer.org/) to install the library in your application:
 
 ```console
-$ composer require zfcampus/statuslib-example:dev-master
+$ composer require zfcampus/statuslib-example
 ```
 
-If you are using this as part of a Zend Framework 2 or Apigility application, you will also need to
-enable the module in your `config/application.config.php` file:
+If you are using this as part of a Zend Framework or Apigility application, you
+may need to enable the module in your `config/application.config.php` file, if
+you are not using the [zend-component-installer](https://docs.zendframework.com/zend-component-installer/):
 
 ```php
-return array(
+return [
     /* ... */
-    'modules' => array(
+    'modules' => [
         /* ... */
         'StatusLib',
-    ),
+    ],
     /* ... */
-);
+];
 ```
 
-Configuration
--------------
+## Configuration
 
-When used as a Zend Framework 2 module, you may define the following configuration values in order
+When used as a Zend Framework module, you may define the following configuration values in order
 to tell the library which adapter to use, and what options to pass to that adapter.
 
 ```php
-array(
-    'statuslib' => array(
+[
+    'statuslib' => [
         'db' => 'Name of service providing DB adapter',
         'table' => 'Name of database table within db to use',
         'array_mapper_path' => 'path to PHP file returning an array for use with ArrayMapper',
-    ),
-    'service_manager' => array(
-        'aliases' => array(
-            // Set to either 'StatusLib\ArrayMapper' or 'StatusLib\TableGatewayMapper'
-            'StatusLib\Mapper' => 'StatusLib\ArrayMapper',
-        ),
-    ),
-)
+    ],
+    'service_manager' => [
+        'aliases' => [
+            // Set to either StatusLib\ArrayMapper or StatusLib\TableGatewayMapper
+            \StatusLib\Mapper::class => \StatusLib\ArrayMapper::class,
+        ],
+    ],
+]
 ```
 
 For purposes of the Apigility examples, we suggest the following:
@@ -73,7 +71,7 @@ For purposes of the Apigility examples, we suggest the following:
 
   ```php
   <?php
-  return array();
+  return [];
   ```
 
 - Edit your application's `config/autoload/local.php` file to set the `array_mapper_path`
@@ -81,19 +79,18 @@ For purposes of the Apigility examples, we suggest the following:
 
   ```php
   <?php
-  return array(
+  return [
       /* ... */
-      'statuslib' => array(
+      'statuslib' => [
         'array_mapper_path' => 'data/statuslib.php',
-      ),
-  );
+      ],
+  ];
   ```
 
 The above will provide the minimum necessary requirements for experimenting with the library in
 order to test an API.
 
-Using a database
-----------------
+## Using a database
 
 The file `data/statuslib.sqlite.sql` contains a [SQLite](https://www.sqlite.org/) schema. You can
 create a SQLite database using:
@@ -106,19 +103,18 @@ The schema can be either used directly by other databases, or easily modified to
 databases.
 
 
-StatusLib in a New ZF2 Project
-------------------------------
+## StatusLib in a New Zend Framework  Project
 
-1. Create a new ZF2 project from scratch, we'll use `my-project` as our project folder:
+1. Create a new Zend Framework project from scratch; we'll use `my-project` as our project folder:
 
   ```console
-  $ composer create-project -sdev --repository-url="https://packages.zendframework.com" zendframework/skeleton-application my-project
+  $ composer create-project zendframework/skeleton-application my-project
   ```
 
 2. Install the StatusLib module:
 
   ```console
-  $ composer require zfcampus/statuslib-example:dev-master
+  $ composer require zfcampus/statuslib-example
   ```
 
 3. Build a DataSource
@@ -140,14 +136,14 @@ StatusLib in a New ZF2 Project
       Next, add the StatusLib specific configuration for an array based data source:
 
       ```php
-      'statuslib' => array(
+      'statuslib' => [
          'array_mapper_path' => 'data/status.data.php',
-      ),
-      'service_manager' => array(
-          'aliases' => array(
-              'StatusLib\Mapper' => 'StatusLib\ArrayMapper',
-          ),
-      ),
+      ],
+      'service_manager' => [
+          'aliases' => [
+              \StatusLib\Mapper::class => \StatusLib\ArrayMapper::class,
+          ],
+      ],
       ```
 
     - Option B: Sqlite data source:
@@ -155,8 +151,8 @@ StatusLib in a New ZF2 Project
       First, create a sqlite3 database, and fill it with the sample data:
 
       ```console
-      $ sqlite3 status.db < vendor/zfcampus/statuslib-example/data/statuslib.sqlite.sql
-      $ sqlite3 status.db < vendor/zfcampus/statuslib-example/data/sample-data/db-sqlite-insert.sql
+      $ sqlite3 data/status.db < vendor/zfcampus/statuslib-example/data/statuslib.sqlite.sql
+      $ sqlite3 data/status.db < vendor/zfcampus/statuslib-example/data/sample-data/db-sqlite-insert.sql
       ```
   
       Then, configure this datasource by setting up a `local.php` configuration file:
@@ -168,42 +164,56 @@ StatusLib in a New ZF2 Project
       Next, add the StatusLib specific configuration for a sqlite database based data source:
 
       ```php
-      'db' => array(
-          'adapters' => array(
-              'MyDb' => array(
+      'db' => [
+          'adapters' => [
+              'MyDb' => [
                   'driver' => 'pdo_sqlite',
-                  'database' => __DIR__ . '/../../data/statuslib.db'
-              )
-          )
-      ),
-      'statuslib' => array(
+                  'database' => __DIR__ . '/../../data/status.db'
+              ],
+          ],
+      ],
+      'statuslib' => [
           'db' => 'MyDb',
           'table' => 'status',
-      ),
-      'service_manager' => array(
-          'aliases' => array(
-              'StatusLib\Mapper' => 'StatusLib\TableGatewayMapper',
-          ),
-          'abstract_factories' => array(
-              'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterAbstractServiceFactory',
-          )
-      ),
+      ],
+      'service_manager' => [
+          'aliases' => [
+              \StatusLib\Mapper::class => \StatusLib\TableGatewayMapper::class,
+          ],
+      ],
       ```
 
-4. Alter the stock controller and view to prove the data source is working:
+4. Create a test script to prove the data source is working:
 
-    - Alter the index view `module/Application/view/application/index/index.phtml`, replacing it with:
+   ```php
+   // test.php
+   namespace StatusLib;
 
-      ```php
-      <?php foreach ($this->statuses as $status): ?>
-          <?php echo $status->message . ' by ' . $status->user; ?><br>
-      <?php endforeach; ?>
-      ```
+   use Zend\Mvc\Application;
+   use Zend\Stdlib\ArrayUtils;
 
-    - Alter the `module/Application/src/Application/Controller/IndexController.php`'s `indexAction` method:
+   include 'vendor/autoload.php';
 
-      ```php
-      $statusMapper = $this->serviceLocator->get('StatusLib\Mapper');
-      $statuses = $statusMapper->fetchAll();
-      return new ViewModel(array('statuses' => $statuses));
-      ```
+   $appConfig = include 'config/application.config.php';
+
+   if (file_exists('config/development.config.php')) {
+       $appConfig = ArrayUtils::merge(
+           $appConfig,
+           include 'config/development.config.php'
+       );
+   }
+
+   $app = Application::init($appConfig);
+   $services = $app->getServiceManager();
+
+   $statusMapper = $services->get(Mapper::class);
+   foreach ($statusMapper->fetchAll() as $status) {
+       printf(
+           "[%d] [%s] %s (by %s)\n",
+           $status->timestamp,
+           $status->id,
+           $status->message,
+           $status->user
+       );
+   }
+   ```

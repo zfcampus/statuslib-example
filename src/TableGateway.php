@@ -9,7 +9,7 @@ namespace StatusLib;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\TableGateway\TableGateway as ZFTableGateway;
-use Zend\Stdlib\Hydrator\ObjectProperty as ObjectPropertyHydrator;
+use Zend\Hydrator\ObjectProperty as ObjectPropertyHydrator;
 
 /**
  * Custom TableGateway instance for StatusLib

@@ -24,7 +24,7 @@ class TableGatewayMapper implements MapperInterface
     protected $table;
 
     /**
-     * @param TableGateway $table 
+     * @param TableGateway $table
      */
     public function __construct(TableGateway $table)
     {
@@ -32,7 +32,7 @@ class TableGatewayMapper implements MapperInterface
     }
 
     /**
-     * @param array|Traversable|\stdClass $data 
+     * @param array|Traversable|\stdClass $data
      * @return Entity
      */
     public function create($data)
@@ -44,20 +44,20 @@ class TableGatewayMapper implements MapperInterface
             $data = (array) $data;
         }
 
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid data provided to %s; must be an array or Traversable',
                 __METHOD__
             ));
         }
 
-        $data['id'] = Uuid::uuid4();
+        $data['id'] = Uuid::uuid4()->toString();
         if (! isset($data['timestamp'])) {
             $data['timestamp'] = time();
         }
         $this->table->insert($data);
 
-        $resultSet = $this->table->select(array('id' => $data['id']));
+        $resultSet = $this->table->select(['id' => $data['id']]);
         if (0 === count($resultSet)) {
             throw new DomainException('Insert operation failed or did not result in new row', 500);
         }
@@ -65,16 +65,16 @@ class TableGatewayMapper implements MapperInterface
     }
 
     /**
-     * @param string $id 
+     * @param string $id
      * @return Entity
      */
     public function fetch($id)
     {
-        if (!Uuid::isValid($id)) {
+        if (! Uuid::isValid($id)) {
             throw new DomainException('Invalid identifier provided', 404);
         }
 
-        $resultSet = $this->table->select(array('id' => $id));
+        $resultSet = $this->table->select(['id' => $id]);
         if (0 === count($resultSet)) {
             throw new DomainException('Status message not found', 404);
         }
@@ -86,17 +86,17 @@ class TableGatewayMapper implements MapperInterface
      */
     public function fetchAll()
     {
-        return new Collection(new DbTableGateway($this->table, null, array('timestamp' => 'DESC')));
+        return new Collection(new DbTableGateway($this->table, null, ['timestamp' => 'DESC']));
     }
 
     /**
-     * @param string $id 
-     * @param array|Traversable|\stdClass $data 
+     * @param string $id
+     * @param array|Traversable|\stdClass $data
      * @return Entity
      */
     public function update($id, $data)
     {
-        if (!Uuid::isValid($id)) {
+        if (! Uuid::isValid($id)) {
             throw new DomainException('Invalid identifier provided', 404);
         }
         if (is_object($data)) {
@@ -107,9 +107,9 @@ class TableGatewayMapper implements MapperInterface
             $data['timestamp'] = time();
         }
 
-        $this->table->update($data, array('id' => $id));
+        $this->table->update($data, ['id' => $id]);
 
-        $resultSet = $this->table->select(array('id' => $id));
+        $resultSet = $this->table->select(['id' => $id]);
         if (0 === count($resultSet)) {
             throw new DomainException('Update operation failed or result in row deletion', 500);
         }
@@ -117,18 +117,18 @@ class TableGatewayMapper implements MapperInterface
     }
 
     /**
-     * @param string $id 
+     * @param string $id
      * @return bool
      */
     public function delete($id)
     {
-        if (!Uuid::isValid($id)) {
+        if (! Uuid::isValid($id)) {
             throw new DomainException('Invalid identifier provided', 404);
         }
 
-        $result = $this->table->delete(array('id' => $id));
+        $result = $this->table->delete(['id' => $id]);
 
-        if (!$result) {
+        if (! $result) {
             return false;
         }
 

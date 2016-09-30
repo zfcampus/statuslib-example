@@ -11,7 +11,7 @@ use InvalidArgumentException;
 use Traversable;
 use Rhumsaa\Uuid\Uuid;
 use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\Hydrator\ObjectProperty as ObjectPropertyHydrator;
+use Zend\Hydrator\ObjectProperty as ObjectPropertyHydrator;
 use ZF\Configuration\ConfigResource;
 
 /**
@@ -40,8 +40,8 @@ class ArrayMapper implements MapperInterface
     protected $hydrator;
 
     /**
-     * @param array $data 
-     * @param ConfigResource $configResource 
+     * @param array $data
+     * @param ConfigResource $configResource
      */
     public function __construct(array $data, ConfigResource $configResource)
     {
@@ -53,7 +53,7 @@ class ArrayMapper implements MapperInterface
     }
 
     /**
-     * @param array|Traversable|\stdClass $data 
+     * @param array|Traversable|\stdClass $data
      * @return Entity
      */
     public function create($data)
@@ -65,7 +65,7 @@ class ArrayMapper implements MapperInterface
             $data = (array) $data;
         }
 
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid data provided to %s; must be an array or Traversable',
                 __METHOD__
@@ -86,16 +86,16 @@ class ArrayMapper implements MapperInterface
     }
 
     /**
-     * @param string $id 
+     * @param string $id
      * @return Entity
      */
     public function fetch($id)
     {
-        if (!Uuid::isValid($id)) {
+        if (! Uuid::isValid($id)) {
             throw new DomainException('Invalid identifier provided', 404);
         }
 
-        if (!array_key_exists($id, $this->data)) {
+        if (! array_key_exists($id, $this->data)) {
             throw new DomainException('Status message not found', 404);
         }
         return $this->createEntity($this->data[$id]);
@@ -110,13 +110,13 @@ class ArrayMapper implements MapperInterface
     }
 
     /**
-     * @param string $id 
-     * @param array|Traversable|\stdClass $data 
+     * @param string $id
+     * @param array|Traversable|\stdClass $data
      * @return Entity
      */
     public function update($id, $data)
     {
-        if (!Uuid::isValid($id)) {
+        if (! Uuid::isValid($id)) {
             throw new DomainException('Invalid identifier provided', 404);
         }
         if (is_object($data)) {
@@ -137,12 +137,12 @@ class ArrayMapper implements MapperInterface
     }
 
     /**
-     * @param string $id 
+     * @param string $id
      * @return bool
      */
     public function delete($id)
     {
-        if (!Uuid::isValid($id)) {
+        if (! Uuid::isValid($id)) {
             throw new DomainException('Invalid identifier provided', 404);
         }
 
@@ -157,7 +157,7 @@ class ArrayMapper implements MapperInterface
     }
 
     /**
-     * @param array $item 
+     * @param array $item
      * @return Entity
      */
     protected function createEntity(array $item)
