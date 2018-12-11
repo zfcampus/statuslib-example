@@ -8,10 +8,11 @@ namespace StatusLib;
 
 use DomainException;
 use InvalidArgumentException;
-use Traversable;
 use Rhumsaa\Uuid\Uuid;
+use Traversable;
+use Zend\Hydrator\ObjectProperty;
+use Zend\Hydrator\ObjectPropertyHydrator;
 use Zend\Stdlib\ArrayUtils;
-use Zend\Hydrator\ObjectProperty as ObjectPropertyHydrator;
 use ZF\Configuration\ConfigResource;
 
 /**
@@ -35,7 +36,7 @@ class ArrayMapper implements MapperInterface
     protected $entityPrototype;
 
     /**
-     * @var ObjectPropertyHydrator
+     * @var ObjectProperty|ObjectPropertyHydrator
      */
     protected $hydrator;
 
@@ -48,7 +49,11 @@ class ArrayMapper implements MapperInterface
         $this->data = $data;
         $this->configResource = $configResource;
 
-        $this->hydrator = new ObjectPropertyHydrator();
+        $hydratorClass = class_exists(ObjectPropertyHydrator::class)
+            ? ObjectPropertyHydrator::class
+            : ObjectProperty::class;
+        $this->hydrator = new $hydratorClass();
+
         $this->entityPrototype = new Entity;
     }
 
