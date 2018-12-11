@@ -9,7 +9,8 @@ namespace StatusLib;
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\TableGateway\TableGateway as ZFTableGateway;
-use Zend\Hydrator\ObjectProperty as ObjectPropertyHydrator;
+use Zend\Hydrator\ObjectProperty;
+use Zend\Hydrator\ObjectPropertyHydrator;
 
 /**
  * Custom TableGateway instance for StatusLib
@@ -20,7 +21,10 @@ class TableGateway extends ZFTableGateway
 {
     public function __construct($table, AdapterInterface $adapter, $features = null)
     {
-        $resultSet = new HydratingResultSet(new ObjectPropertyHydrator(), new Entity());
+        $hydratorClass = class_exists(ObjectPropertyHydrator::class)
+            ? ObjectPropertyHydrator::class
+            : ObjectPropertyHydrator::class;
+        $resultSet = new HydratingResultSet(new $hydratorClass(), new Entity());
         return parent::__construct($table, $adapter, $features, $resultSet);
     }
 }
