@@ -23,7 +23,7 @@ class TableGateway extends ZFTableGateway
     {
         $hydratorClass = class_exists(ObjectPropertyHydrator::class)
             ? ObjectPropertyHydrator::class
-            : ObjectPropertyHydrator::class;
+            : ObjectProperty::class;
         $resultSet = new HydratingResultSet(new $hydratorClass(), new Entity());
         return parent::__construct($table, $adapter, $features, $resultSet);
     }
