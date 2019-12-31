@@ -1,5 +1,9 @@
 # StatusLib
 
+> ## Repository abandoned 2019-12-31
+>
+> This repository has moved to laminas-api-tools/statuslib-example.
+
 This is a library designed to demonstrate an [Apigility](http://apigility.org/) "Code-Connected"
 REST API, and has been written in parallel with the [Apigility documentation](https://github.com/zfcampus/apigility-documentation).
 
